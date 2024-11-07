@@ -1,3 +1,5 @@
-# What: all powershell bootstrap stuff
-# Why: fetched by build script automatically
+# Any backup file of text editors
+*.bak
+
+# bootstrap files are downloaded during installation
 /.bootstrap

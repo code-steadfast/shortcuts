@@ -4,7 +4,8 @@
 #>
 
 param (
-    [switch]$InPlace
+    [Parameter(Mandatory = $false, HelpMessage = 'Install in place without cloning/updating the repository. (Switch, default: false)')]
+    [switch]$InPlace = $false
 )
 
 Function Copy-Config {
@@ -40,17 +41,18 @@ $repoUrl = "https://github.com/xxthunder/shortcuts.git"
 $shortcutsDir = "$Env:USERPROFILE\shortcuts"
 $branch = "develop"
 
-$bootstrap_git_tag = "v1.14.0"
+$bootstrap_git_tag = "v1.14.2"
+
+# Load utility methods
+Invoke-RestMethod -Uri https://raw.githubusercontent.com/avengineers/bootstrap/refs/tags/$bootstrap_git_tag/utils.ps1 | Invoke-Expression
 
 if (-not $InPlace) {
-    # Load utility methods
-    Invoke-RestMethod -Uri https://raw.githubusercontent.com/avengineers/bootstrap/refs/tags/$bootstrap_git_tag/utils.ps1 | Invoke-Expression
-
     # Get the latest commit of this repository
     CloneOrPullGitRepo -RepoUrl $repoUrl -TargetDirectory $shortcutsDir -Branch $branch
 
     Push-Location $shortcutsDir
-} else {
+}
+else {
     # Run in place, no cloning
     Push-Location $PSScriptRoot.TrimEnd("\bin")
 }
@@ -63,7 +65,7 @@ try {
 
     # Create directory for private shortcuts
     $shortcutsPrivateDir = "$Env:USERPROFILE\shortcuts_private"
-    New-Item -Path $shortcutsPrivateDir -ItemType Directory -Force
+    New-Directory $shortcutsPrivateDir
 
     # Start Keypirinha
     & "$Env:USERPROFILE\scoop\apps\keypirinha\current\keypirinha.exe"

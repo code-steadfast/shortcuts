@@ -21,6 +21,30 @@ Function Copy-Config {
     }
 }
 
+Function New-Shortcut {
+    param (
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$target,
+        [Parameter(Mandatory = $true, Position = 1)]
+        [string]$path
+    )
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut($target)
+    $Shortcut.TargetPath = $path
+    $Shortcut.Save()
+}
+
+Function New-Startup-Shortcut {
+    param (
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$name,
+        [Parameter(Mandatory = $true, Position = 1)]
+        [string]$path
+    )
+    $startupPath = Join-Path -Path $env:APPDATA -ChildPath "Microsoft\Windows\Start Menu\Programs\Startup"
+    New-Shortcut -target (Join-Path -Path $startupPath -ChildPath "$name.lnk") -path $path
+}
+
 # Initial bootstrapping (scoop and other dependencies)
 function Invoke-Bootstrap {
     # Download bootstrap scripts from external repository
@@ -59,6 +83,9 @@ else {
 
 try {
     Invoke-Bootstrap
+
+    # automatically start AutoHotkey
+    New-Startup-Shortcut -name "shortcuts_hotkeys" -path "$shortcutsDir\tools\AutoHotKey\hotkeys.cmd"
 
     # Create Keypirinha default settings
     Copy-Config "config\keypirinha\portable\Profile" "$Env:USERPROFILE\scoop\apps\keypirinha\current\portable\Profile"

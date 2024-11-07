@@ -19,8 +19,8 @@
             "Source": "main"
         },
         {
-            "Source": "extras",
-            "Name": "windows-terminal"
+            "Name": "windows-terminal",
+            "Source": "extras"
         },
         {
             "Source": "extras",
@@ -33,6 +33,10 @@
         {
             "Source": "extras",
             "Name": "vscode"
+        },
+        {
+            "Name": "autohotkey",
+            "Source": "extras"
         }
     ]
 }

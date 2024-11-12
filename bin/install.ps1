@@ -48,7 +48,7 @@ Function New-Startup-Shortcut {
 # Initial bootstrapping (scoop and other dependencies)
 function Invoke-Bootstrap {
     # Download bootstrap scripts from external repository
-    Invoke-RestMethod https://raw.githubusercontent.com/avengineers/bootstrap-installer/refs/tags/$bootstrap_git_tag/install.ps1 | Invoke-Expression
+    Invoke-RestMethod -Uri https://raw.githubusercontent.com/avengineers/bootstrap-installer/refs/tags/$bootstrap_git_tag/install.ps1 | Invoke-Expression
     # Execute bootstrap script
     . .\.bootstrap\bootstrap.ps1
 }

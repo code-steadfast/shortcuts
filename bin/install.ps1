@@ -65,7 +65,7 @@ $repoUrl = "https://github.com/xxthunder/shortcuts.git"
 $shortcutsDir = "$Env:USERPROFILE\shortcuts"
 $branch = "develop"
 
-$bootstrap_git_tag = "v1.16.0"
+$bootstrap_git_tag = "v1.17.2"
 
 # Load utility methods
 Invoke-RestMethod -Uri https://raw.githubusercontent.com/avengineers/bootstrap/refs/tags/$bootstrap_git_tag/utils.ps1 | Invoke-Expression

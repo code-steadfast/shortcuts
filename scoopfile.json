@@ -32,11 +32,19 @@
         },
         {
             "Source": "extras",
+            "Name": "winmerge"
+        },
+        {
+            "Source": "extras",
+            "Name": "sysinternals"
+        },
+        {
+            "Source": "extras",
             "Name": "vscode"
         },
         {
-            "Name": "autohotkey",
-            "Source": "extras"
+            "Source": "extras",
+            "Name": "autohotkey"
         }
     ]
 }

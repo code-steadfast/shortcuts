@@ -8,6 +8,18 @@ param (
     [switch]$InPlace = $false
 )
 
+Function Test-AdminRights {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+# Check if running with administrator privileges and fail if so
+if (Test-AdminRights) {
+    Write-Host "ERROR: This script should not be run with administrator privileges. Please run it from a normal PowerShell console." -ForegroundColor Red
+    exit 1
+}
+
 Function Copy-Config {
     param (
         [Parameter(Mandatory = $true, Position = 0)]
